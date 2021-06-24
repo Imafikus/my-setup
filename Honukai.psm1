@@ -11,13 +11,13 @@ function Write-Theme {
     # write # and space
     $prompt = Write-Prompt -Object $sl.PromptSymbols.StartSymbol -ForegroundColor $sl.Colors.PromptHighlightColor
     # write user
-    $user = [System.Environment]::UserName
+    $user = $sl.CurrentUser
     if (Test-NotDefaultUser($user)) {
         $prompt += Write-Prompt -Object " $user" -ForegroundColor $sl.Colors.PromptHighlightColor
         # write at (devicename)
-        $device = Get-ComputerName
+        $computer = $sl.CurrentHostname
         $prompt += Write-Prompt -Object " at" -ForegroundColor $sl.Colors.PromptForegroundColor
-        $prompt += Write-Prompt -Object " $device" -ForegroundColor $sl.Colors.GitDefaultColor
+        $prompt += Write-Prompt -Object " $computer" -ForegroundColor $sl.Colors.GitDefaultColor
         # write in for folder
         $prompt += Write-Prompt -Object " in" -ForegroundColor $sl.Colors.PromptForegroundColor
     }
@@ -66,10 +66,10 @@ function Get-TimeSinceLastCommit {
 
 $sl = $global:ThemeSettings #local settings
 $sl.PromptSymbols.StartSymbol = '#'
-$sl.PromptSymbols.PromptIndicator = '>'
+$sl.PromptSymbols.PromptIndicator = [char]::ConvertFromUtf32(0x279C)
 $sl.Colors.PromptHighlightColor = [ConsoleColor]::DarkBlue
 $sl.Colors.PromptForegroundColor = [ConsoleColor]::White
-$sl.Colors.PromptHighlightColor = [ConsoleColor]::Red
+$sl.Colors.PromptHighlightColor = [ConsoleColor]::DarkBlue
 $sl.Colors.WithForegroundColor = [ConsoleColor]::DarkRed
 $sl.Colors.WithBackgroundColor = [ConsoleColor]::Magenta
 $sl.Colors.VirtualEnvForegroundColor = [ConsoleColor]::Red
